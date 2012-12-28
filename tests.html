@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>QUnit basic example</title>
+  <link rel="stylesheet" href="./resources/qunit-1.10.0.css">
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="./resources/qunit-1.10.0.js"></script>
+  <script src="./TicTacToe.js"></script>
+  <script>
+    module('Gameboard',{
+      setup: function(){
+        this.gameboard = new Gameboard();
+        this.defaultGameboard = ['_','_','_','_','_','_','_','_','_'];
+      }
+    });
+
+    test("Gameboard.print", function() {
+      this.gameboard.print();
+      ok(true, "We expect gameboard to print to screen");
+    });
+
+    test('Gameboard.getCurrentGameboard', function(){
+      deepEqual(this.gameboard.getCurrentGameboard(), this.defaultGameboard,'getCurrent gameboard should give its array');
+    });
+
+    test('Gameboard.markPos', function(){
+      expect(4);
+      this.gameboard.markPos('X',0);
+      this.defaultGameboard[0] = 'X';
+      deepEqual(this.gameboard.getCurrentGameboard(),this.defaultGameboard, 'MarkPos should have marked with an X the first element');
+
+      this.gameboard.markPos('O',8);
+      this.defaultGameboard[8] = 'O';
+      deepEqual(this.gameboard.getCurrentGameboard(),this.defaultGameboard, 'MarkPos should have marked with an O the last element');
+
+      throws(function(){this.gameboard.markPos('A', 2)}, 'Should throw error for invalid marker');
+      throws(function(){this.gameboard.markPos('X',-1)}, 'Should throw error for invalid index');
+
+    });
+
+    test('Gameboard.revertMove', function(){
+      this.gameboard.markPos('X',0);
+      this.gameboard.revertMove();
+      deepEqual(this.gameboard.getCurrentGameboard(),this.defaultGameboard,'The move should be reverted');
+    });
+
+    test('Gameboard.isGameover',function(){
+      equal(this.gameboard.isGameover(),false, 'Should return false because its not game over');
+      this.gameboard.markPos('X',0);
+      this.gameboard.markPos('X',1);
+      this.gameboard.markPos('X',2);
+      this.gameboard.print();
+      equal(this.gameboard.isGameover(),true, 'Should return true because there is 3 X in a row');
+    });
+
+    test('Gameboard.getWinner',function(){
+      equal(this.gameboard.getWinner(),null, 'Should return null because there is no winner yet');
+      this.gameboard.markPos('X',0);
+      this.gameboard.markPos('X',1);
+      this.gameboard.markPos('X',2);
+      equal(this.gameboard.getWinner(),'X', 'Should return X because there is a winner');
+      this.gameboard.revertMove();
+      equal(this.gameboard.getWinner(),null, 'Should return null because we reverted the winner');
+
+    });
+  </script>
+</body>
+</html>
