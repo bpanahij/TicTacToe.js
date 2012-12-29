@@ -69,6 +69,17 @@
 
     });
 
+    test('Gameboard.getEmptyPos',function(){
+      deepEqual(this.gameboard.getEmptyPos(),[0,1,2,3,4,5,6,7,8],'Should return all positions');
+      mark_x_winning_combination(this.gameboard);
+      deepEqual(this.gameboard.getEmptyPos(),[3,4,5,6,7,8],'Should return all positions but [0,1,2]');
+      this.gameboard.revertMove();
+      deepEqual(this.gameboard.getEmptyPos(),[2, 3,4,5,6,7,8],'Should return all positions but [0,1]');
+
+    });
+
+    
+
   </script>
 </body>
 </html>
