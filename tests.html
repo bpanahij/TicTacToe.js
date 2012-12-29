@@ -18,6 +18,12 @@
       }
     });
 
+    function mark_x_winning_combination(gameboard){
+      gameboard.markPos('X',0);
+      gameboard.markPos('X',1);
+      gameboard.markPos('X',2);
+    }
+
     test("Gameboard.print", function() {
       this.gameboard.print();
       ok(true, "We expect gameboard to print to screen");
@@ -50,23 +56,19 @@
 
     test('Gameboard.isGameover',function(){
       equal(this.gameboard.isGameover(),false, 'Should return false because its not game over');
-      this.gameboard.markPos('X',0);
-      this.gameboard.markPos('X',1);
-      this.gameboard.markPos('X',2);
-      this.gameboard.print();
+      mark_x_winning_combination(this.gameboard);
       equal(this.gameboard.isGameover(),true, 'Should return true because there is 3 X in a row');
     });
 
     test('Gameboard.getWinner',function(){
       equal(this.gameboard.getWinner(),null, 'Should return null because there is no winner yet');
-      this.gameboard.markPos('X',0);
-      this.gameboard.markPos('X',1);
-      this.gameboard.markPos('X',2);
+      mark_x_winning_combination(this.gameboard);
       equal(this.gameboard.getWinner(),'X', 'Should return X because there is a winner');
       this.gameboard.revertMove();
       equal(this.gameboard.getWinner(),null, 'Should return null because we reverted the winner');
 
     });
+
   </script>
 </body>
 </html>
