@@ -71,7 +71,7 @@ var Gameboard = function(initialGameboard){
         var empty = [];
         for (var i in currentGameboard){
             if(currentGameboard[i]==='_')
-                empty.push(i);
+                empty.push(Number(i));
         }
         return empty;
     }
