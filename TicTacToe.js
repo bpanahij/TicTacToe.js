@@ -48,23 +48,11 @@ var Gameboard = function(initialGameboard){
     }
 
     var checkIfWinner = function(){
-        for(var i in winCombinations){
-            if (isWinCondition(winCombinations[i])){
-                winner = currentGameboard[winCombinations[i][0]];
-                return winner;
-            }
-        }
-        if (pastMoves.length === 9){
-            winner = '_';
-            return winner;
-        }
         return null;
     }
 
     var isWinCondition = function(winCombination){
-        return currentGameboard[winCombination[0]] === currentGameboard[winCombination[1]]
-            && currentGameboard[winCombination[0]] === currentGameboard[winCombination[2]] 
-            && currentGameboard[winCombination[0]] !== '_';
+        return false;
     }
 
     this.getEmptyPos = function(){
